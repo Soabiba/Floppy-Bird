@@ -1,5 +1,6 @@
 #include "raylib.h"
 
+
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
@@ -7,10 +8,9 @@ int main(void)
 {    
     // Initialization
     //--------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+   
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+    //InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
