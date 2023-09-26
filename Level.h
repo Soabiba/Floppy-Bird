@@ -1,67 +1,103 @@
 #pragma once
 #include <vector>
+#include "raylib.h"
+
+
+
+
+enum GameState
+{
+    MENU,
+    GAME,
+    HIGH_SCORE,
+    GAME_OVER,
+    EXIT
+};
+
 
 class Level
 {
-public:
-    void init();
-    void load_resources();
-    void update();
-    void draw();
-    void close();
 
-    int screenWidth = 600;
-    int screenHeight = 700;
+
+public:
+   void Initialization();
+   void Resources();
+   void Update();
+   void Draw();
+   void De_Initialization();
+   
+ 
+
+    int screenWidth = 1250;
+    int screenHeight = 600;
 
 private:
-    int score;
-    int comboTimer;
-    int combo;
-
+    
+    GameState gameState;
     bool gameOver;
     bool mainScreen;
 
-    struct ScoreDisplay
-    {
-        int value;
-        Vector2 position;
-        int lifetime;
-        bool isDead;
-    };
+    double Time;  
+    double passedTime;
 
-    std::vector<ScoreDisplay> scoreDisplays;
-
-    struct Coin
-    {
-        Rectangle rec{ 0,0, 5,5 };;
-        Vector2 velocity = { 0, 100 };
-        bool isDead;
-    };
-    std::vector<Coin> coins;
-
-    struct Enemy
-    {
-        Rectangle rec = { 0,0, 20,19 };
-        Vector2 velocity = {};
-        bool isDead;
-    };
-    std::vector<Enemy> enemies;
-
-    struct Player
-    {
-        Rectangle rec = { 0,0, 45, 30 };
-        int speed = 200;
-        bool isDead;
-    };
-    Player player;
-
-    // Textures
-    //Texture2D Spaceship;
     
 
-    //Sounds
-   //Sound missileSound;
+    struct Button
+    {
+        Rectangle rect;
+        const char* text;
+        bool isHighlighted;
+    }; Button playButton, highscoreButton, exitButton, backButton, retryButton, backToMenuButton;
 
-public:
-    //Sound backgroundMusic;
+    void DrawButton(Button button, bool isHighlighted);
+
+
+    struct Background {
+        float scrollSpeed = 2.0f;   
+        float offsetX = 0.0f;       
+
+    }; Background background;
+
+   
+
+    struct Collectibles {
+        Rectangle size;
+        Vector2 velocity;
+        bool isDead;
+    }; std::vector<Collectibles> collectibles;
+
+    struct Pipes
+    {
+        Rectangle size;
+        Vector2 velocity;
+        bool isDead;
+        bool isScored;
+    };  std::vector<Pipes> pipes;
+   
+
+
+    struct Floopy
+    {
+        Rectangle rec = { 0,0,40,40};
+        int speed = 200;
+        bool isDead;
+    }; Floopy floopy;
+
+
+    struct HighScore
+    {
+        char name[4];
+        int score;
+    }; HighScore highscore;
+
+    std::vector<HighScore> highScores; 
+
+
+    
+
+    // Textures
+    Texture2D backgroundImage;  // Background Image 
+
+    Texture2D pipeImage; // Pipe Image
+    
 };

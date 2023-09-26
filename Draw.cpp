@@ -1,90 +1,93 @@
 ﻿#include "Draw.h"
+#include "raylib.h"
+#include "Level.h"
 
-void Level::draw()
+void Level::Draw()
 {
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
-    if (mainScreen)
-    {
-        //Draw Start Screen
-        DrawTexture(Βackground, 0, 0, WHITE);
-        DrawText("SPACE ROCKS", screenWidth / 2 - MeasureText("SPACE ROCKS", 30) / 2, screenHeight / 2 - 30, 30, WHITE);
-        DrawText("PRESS [ENTER] TO START", screenWidth / 2 - MeasureText("PRESS [ENTER] TO START", 20) / 2, screenHeight / 2 + 20, 20, WHITE);
 
+    if (gameState == MENU)
+    {
+        // Draw the menu screen
+
+        // Draw the "Play" button with highlight
+        DrawButton(playButton, playButton.isHighlighted);
+
+        // Draw the "High Score" button with highlight
+        DrawButton(highscoreButton, highscoreButton.isHighlighted);
+
+        // Draw the "Exit" button with highlight
+        DrawButton(exitButton, exitButton.isHighlighted);
     }
 
-    else if (gameOver)
+    else if (gameState == GAME)
     {
-        // Draw Game Over Screen
-        DrawTexture(Βackground, 0, 0, WHITE);
-        DrawText("YOU LOSE!!", GetScreenWidth() / 2 - MeasureText("YOU LOSE!!", 30) / 2, GetScreenHeight() / 2 - 50, 30, RED);
+       
+
+        //-------- Background ----------------------------------------------------------------------------------------
+
+        //Background Movement
+        background.offsetX += background.scrollSpeed;
+
+        if (background.offsetX >= backgroundImage.width) background.offsetX = 0;
+
+        // Draw Background Image
+        DrawTexture(backgroundImage, -(int)background.offsetX, 0, WHITE);
+        // Redraw the image to create loop
+        DrawTexture(backgroundImage, -(int)background.offsetX + backgroundImage.width, 0, WHITE);
+
+
+        //DrawTexture(floopyTexture, floopy.rec.x, floopy.rec.y, WHITE);
+        DrawRectangle(floopy.rec.x, floopy.rec.y, floopy.rec.width, floopy.rec.height, BLUE);
+
+
+        //pipes
+        for (const auto& rect : pipes)
+        {
+            if (!rect.isDead)
+            {
+                DrawRectangleRec(rect.size, GREEN);
+                // DrawTexture(pipeImage, rect.size.x, rect.size.y, WHITE);
+            }
+        }
+
+        // Draw the score
+        DrawText(TextFormat("Score: %d", highscore.score), screenWidth - 200, 10, 30, YELLOW);
+    }
+    else if (gameState == HIGH_SCORE)
+    {
+        
+      
+
+        DrawButton(backButton, false); 
+        
+
+    }
+    else if (gameState == GAME_OVER)
+    {
+       
+        DrawButton(retryButton, retryButton.isHighlighted);
+
+       
+        DrawButton(backToMenuButton, backButton.isHighlighted);
+
+        
     }
 
-    else
-    {
-        // Draw the playable Game
-        DrawTexture(Βackground, 0, 0, WHITE); //Draw the background
-
-        DrawTexture(Spaceship, (int)player.rec.x, (int)player.rec.y, WHITE); // Draw the Spaceship
-
-        if (shoot.isFired && !shoot.isDead)
-        {
-            DrawTexture(Shooting, (int)shoot.rec.x, (int)shoot.rec.y, WHITE); // Draw the Missile
-        }
-
-        // Draw the meteors
-        for (const Enemy& meteor : enemies)
-        {
-            if (!meteor.isDead)
-            {
-                DrawTexture(Rock, (int)meteor.rec.x, (int)meteor.rec.y, WHITE); // Draw the meteors when they are not dead
-            }
-        }
-
-        for (auto& coin : coins)
-        {
-            if (!coin.isDead)
-            {
-                DrawTexture(Coins, (int)coin.rec.x, (int)coin.rec.y, WHITE); // Draw the coins when are not dead
-            }
-        }
-
-        for (auto& scoreDisplay : scoreDisplays)
-        {
-            DrawText(TextFormat("+%i", scoreDisplay.value), (int)scoreDisplay.position.x, (int)scoreDisplay.position.y, 30, YELLOW);
-            scoreDisplay.lifetime--;
-
-            if (scoreDisplay.lifetime <= 0)
-            {
-                scoreDisplay.isDead = true;
-            }
-        }
-
-        scoreDisplays.erase(std::remove_if(scoreDisplays.begin(), scoreDisplays.end(), [](ScoreDisplay const& scoreDisplay) { return scoreDisplay.isDead; }), scoreDisplays.end());
-
-        DrawText(TextFormat("Score: %i", score), 10, 10, 20, RAYWHITE); //Display the  score
-
-        // Display the Missile charge
-        if (shoot.isFired == false)
-        {
-            int barWidth = 200;
-            int barHeight = 20;
-            int barX = (screenWidth - barWidth);
-            int barY = 10;
-
-            //Display the green bar going up with the charge
-            if (shoot.charge < 100) DrawRectangle(barX, barY, (int)(barWidth * (shoot.charge / 100.0f)), barHeight, YELLOW);
-            {
-                DrawRectangleLines(barX, barY, barWidth, barHeight, WHITE); // Display the bar limits 
-            }
-
-            if (shoot.loaded == true)
-            {
-
-                DrawText(TextFormat("READY TO SHOOT"), barX + 8, barY + 2, 20, PINK); //Diplay a Charge sign 
-            }
-        }
-    }
+    
     EndDrawing();
+
+
+   
+}
+
+void Level::DrawButton(Button button, bool isHighlighted)
+{
+    
+    DrawRectangleRec(button.rect, isHighlighted ? LIGHTGRAY : BLACK);
+
+   
+    DrawText(button.text, button.rect.x + 70, button.rect.y + 10, 20, RED);
 }
