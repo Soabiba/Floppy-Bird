@@ -1,7 +1,7 @@
 #include "raylib.h"
 #include "Level.h"
 
-#include <fstream>
+//#include <fstream>
 #include <vector>
 
 
@@ -10,6 +10,8 @@ void Level::Initialization()
 {
 	
 	
+    pipes.clear();
+    collectibles.clear();
 
     gameState = MENU;
 
@@ -30,15 +32,13 @@ void Level::Initialization()
 
 
 
-	// Set the initial position of the "floopy"
+	// initialiazation of "floopy"
     floopy.isDead = false;
 	floopy.rec.x = 100;  
 	floopy.rec.y = (screenHeight - floopy.rec.height) / 2;  
     floopy.speed = 5;
 
 
-    pipes.clear();
-    collectibles.clear();
     
 
     int gapBetweenRectangles = 150; 

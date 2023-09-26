@@ -169,9 +169,7 @@
     <ClCompile Include="Resources.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Draw.h" />
     <ClInclude Include="Level.h" />
-    <ClInclude Include="mainmenu.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\OneDrive\Desktop\Background_Asset.png" />
