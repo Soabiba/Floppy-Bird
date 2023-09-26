@@ -46,7 +46,7 @@ void Level::Update()
         else if (IsKeyDown(KEY_DOWN))
         {
 
-            floopy.rec.y += 5;
+            floopy.rec.y += floopy.speed;
         }
 
 
@@ -87,7 +87,7 @@ void Level::Update()
             }
         }
 
-
+        
 
 
         //Collision 
