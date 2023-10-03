@@ -1,5 +1,4 @@
-﻿
-#include "raylib.h"
+﻿#include "raylib.h"
 #include "Level.h"
 
 void Level::Draw()

@@ -39,11 +39,11 @@ void Level::Update()
 
         //Flooypy Movement
 
-        if (IsKeyDown(KEY_UP))
+        if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W))
         {
             floopy.rec.y -= floopy.speed;
         }
-        else if (IsKeyDown(KEY_DOWN))
+        else if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S))
         {
 
             floopy.rec.y += floopy.speed;

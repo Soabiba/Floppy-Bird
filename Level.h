@@ -2,9 +2,6 @@
 #include <vector>
 #include "raylib.h"
 
-
-
-
 enum GameState
 {
     MENU,
@@ -41,7 +38,6 @@ private:
     double passedTime;
 
     
-
     struct Button
     {
         Rectangle rect;
@@ -59,7 +55,6 @@ private:
     }; Background background;
 
    
-
     struct Collectibles {
         Rectangle size;
         Vector2 velocity;
@@ -74,7 +69,6 @@ private:
         bool isScored;
     };  std::vector<Pipes> pipes;
    
-
 
     struct Floopy
     {
@@ -92,8 +86,6 @@ private:
 
     std::vector<HighScore> highScores; 
 
-
-    
 
     // Textures
     Texture2D backgroundImage;  // Background Image 
