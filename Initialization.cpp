@@ -8,8 +8,7 @@
 
 void Level::Initialization()
 {
-	
-	
+
     pipes.clear();
     collectibles.clear();
 
@@ -51,7 +50,7 @@ void Level::Initialization()
         
         int topRectHeight = GetRandomValue(100, screenHeight - gapBetweenRectangles - 100);
 
-        Pipes topPipes;
+        Pipes topPipes = {};
         topPipes.size = { (float) screenWidth + i * 200, 0, 50, (float) topRectHeight };
         topPipes.velocity = { -5, 0 };
         topPipes.isDead = false;
@@ -61,7 +60,7 @@ void Level::Initialization()
        
         int bottomRectY = topRectHeight + gapBetweenRectangles;
 
-        Pipes bottomPipes;
+        Pipes bottomPipes = {};
         bottomPipes.size = { (float) screenWidth + i * 200, (float) bottomRectY, 50, (float)screenHeight - bottomRectY };
         bottomPipes.velocity = { -5, 0 };
         bottomPipes.isDead = false;
@@ -70,8 +69,6 @@ void Level::Initialization()
 
     }
 
-
-    
 }
 
 
