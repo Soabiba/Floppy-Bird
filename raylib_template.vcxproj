@@ -173,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\OneDrive\Desktop\Background_Asset.png" />
+    <Image Include="Source\Assets\mainmenubg.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

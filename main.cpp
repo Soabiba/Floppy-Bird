@@ -20,10 +20,7 @@ int main(void)
     InitAudioDevice();
 
     level.Resources();
-    //put in initialize
-    auto sound = LoadSound("./hitHurt.ogg");
-
-
+    
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {

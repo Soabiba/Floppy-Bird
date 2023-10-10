@@ -10,6 +10,7 @@ void Level::Draw()
     if (gameState == MENU)
     {
         // Draw the menu screen
+        DrawTexture(mainbackgroundImage, 0, 0, WHITE);
 
         // Draw the "Play" button with highlight
         DrawButton(playButton, playButton.isHighlighted);
@@ -19,6 +20,8 @@ void Level::Draw()
 
         // Draw the "Exit" button with highlight
         DrawButton(exitButton, exitButton.isHighlighted);
+
+
     }
 
     else if (gameState == GAME)
@@ -39,7 +42,7 @@ void Level::Draw()
 
 
         //DrawTexture(floopyTexture, floopy.rec.x, floopy.rec.y, WHITE);
-        DrawRectangle(floopy.rec.x, floopy.rec.y, floopy.rec.width, floopy.rec.height, BLUE);
+        DrawRectangle(static_cast<int>(floopy.rec.x), static_cast<int>(floopy.rec.y), static_cast<int>(floopy.rec.width), static_cast<int>(floopy.rec.height), BLUE);
 
 
         //pipes
@@ -53,7 +56,7 @@ void Level::Draw()
         }
 
         // Draw the score
-        DrawText(TextFormat("Score: %d", highscore.score), screenWidth - 200, 10, 30, YELLOW);
+        DrawText(TextFormat("Score: %d", highscore.score), screenWidth - 200, 10, 30, DARKPURPLE);
     }
     else if (gameState == HIGH_SCORE)
     {
@@ -66,11 +69,11 @@ void Level::Draw()
     }
     else if (gameState == GAME_OVER)
     {
-       
-        DrawButton(retryButton, retryButton.isHighlighted);
+        DrawTexture(endbackgroundImage, 0, 0, WHITE);
 
+        DrawButton(retryButton, retryButton.isHighlighted);
        
-        DrawButton(backToMenuButton, backButton.isHighlighted);
+        DrawButton(backToMenuButton, backToMenuButton.isHighlighted);
 
         
     }
@@ -84,9 +87,21 @@ void Level::Draw()
 
 void Level::DrawButton(Button button, bool isHighlighted)
 {
-    
-    DrawRectangleRec(button.rect, isHighlighted ? LIGHTGRAY : BLACK);
+    if (isHighlighted)
+    {
+        PlaySound(hoveringSound);
+    }
+    // Draw the button
+    Color blue = { 51,42,95, 200};
+    DrawRectangleRec(button.rect, isHighlighted ? LIGHTGRAY : blue);
 
-   
-    DrawText(button.text, button.rect.x + 70, button.rect.y + 10, 20, RED);
+    // Calculate the text position to center it in the button
+    int textWidth = MeasureText(button.text, 23);
+    int textX = static_cast<int>(button.rect.x + (button.rect.width - textWidth) / 2);
+    int textY = static_cast<int>(button.rect.y + (button.rect.height - 23) / 2);
+
+    // Draw the text inside the button
+    Color green = { 0, 250, 154, 200 };
+    DrawText(button.text, textX, textY, 23, green);
 }
+

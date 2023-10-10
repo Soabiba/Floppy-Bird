@@ -1,10 +1,6 @@
 #include "raylib.h"
 #include "Level.h"
-
-//#include <fstream>
 #include <vector>
-
-
 
 void Level::Initialization()
 {
@@ -25,8 +21,8 @@ void Level::Initialization()
     highscoreButton = { { (float) screenWidth / 2 - 100, (float)screenHeight / 2 + 50, 200, 50 }, "High Score", false };
     exitButton = { { (float) screenWidth / 2 - 100, (float) screenHeight / 2 + 125, 200, 50 }, "Exit", false };
     backButton = { { (float)screenWidth / 2 - 100, (float)screenHeight / 2 + 50, 200, 50 }, "Back", false };
-    retryButton = { { (float)screenWidth / 2 - 100, (float)screenHeight / 2 + 125, 200, 50 }, "Retry", false };
-    backToMenuButton = { { (float)screenWidth / 2 - 100, (float)screenHeight / 2 + 200, 200, 50 }, "Menu", false };
+    retryButton = { { (float)screenWidth / 2 - 100, (float)screenHeight / 2 + 50, 200, 50 }, "Retry", false };
+    backToMenuButton = { { (float)screenWidth / 2 - 100, (float)screenHeight / 2 + 125, 200, 50 }, "Menu", false };
 
 
 
@@ -37,8 +33,6 @@ void Level::Initialization()
 	floopy.rec.y = (screenHeight - floopy.rec.height) / 2;  
     floopy.speed = 5;
 
-
-    
 
     int gapBetweenRectangles = 150; 
     int floopyY = screenHeight / 2; 
@@ -70,8 +64,3 @@ void Level::Initialization()
     }
 
 }
-
-
-
-
-

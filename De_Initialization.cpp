@@ -6,7 +6,12 @@ void Level::De_Initialization()
 
     UnloadTexture(backgroundImage);
     UnloadTexture(pipeImage);
-    
+    UnloadTexture(mainbackgroundImage);
+    UnloadTexture(endbackgroundImage);
+
+    UnloadSound(hitSound);
+    UnloadSound(gameOverSound);
+    UnloadSound(hoveringSound);
 
     pipes.clear();
     collectibles.clear();

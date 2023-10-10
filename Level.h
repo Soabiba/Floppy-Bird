@@ -89,7 +89,11 @@ private:
 
     // Textures
     Texture2D backgroundImage;  // Background Image 
-
     Texture2D pipeImage; // Pipe Image
-    
+    Texture2D mainbackgroundImage;
+    Texture2D endbackgroundImage;
+
+    Sound hitSound;
+    Sound gameOverSound;
+    Sound hoveringSound;
 };

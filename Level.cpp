@@ -33,6 +33,7 @@ void Level::Update()
         playButton.isHighlighted = CheckCollisionPointRec(GetMousePosition(), playButton.rect);
         highscoreButton.isHighlighted = CheckCollisionPointRec(GetMousePosition(), highscoreButton.rect);
         exitButton.isHighlighted = CheckCollisionPointRec(GetMousePosition(), exitButton.rect);
+
     }
     else if (gameState == GAME)
     {
@@ -100,6 +101,7 @@ void Level::Update()
                 {
 
                     gameOver = true;
+                    PlaySound(gameOverSound);
 
                     gameState = GAME_OVER;
 
@@ -113,6 +115,7 @@ void Level::Update()
                     {
 
                         rect.isScored = true;
+                        PlaySound(hitSound);
                         highscore.score++;
                     }
                 }
@@ -132,20 +135,23 @@ void Level::Update()
     }
     else if (gameState == GAME_OVER)
     {
-       
-      
+   
         if (CheckCollisionPointRec(GetMousePosition(), retryButton.rect) && IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
         {
             Initialization();
             gameState = GAME; 
         }
         
+
         else
            
         if (CheckCollisionPointRec(GetMousePosition(), backToMenuButton.rect) && IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
         {
             gameState = MENU; 
         }
+
+        retryButton.isHighlighted = CheckCollisionPointRec(GetMousePosition(), retryButton.rect);
+        backToMenuButton.isHighlighted = CheckCollisionPointRec(GetMousePosition(), backToMenuButton.rect);
     }
     else if (gameState == EXIT)
     {

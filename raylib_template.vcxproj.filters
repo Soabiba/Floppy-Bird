@@ -46,5 +46,8 @@
     <Image Include="..\..\..\OneDrive\Desktop\Background_Asset.png">
       <Filter>Source Files\Assets</Filter>
     </Image>
+    <Image Include="Source\Assets\mainmenubg.png">
+      <Filter>Source Files\Assets</Filter>
+    </Image>
   </ItemGroup>
 </Project>
