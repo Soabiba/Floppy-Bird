@@ -8,6 +8,7 @@ void Level::De_Initialization()
     UnloadTexture(pipeImage);
     UnloadTexture(mainbackgroundImage);
     UnloadTexture(endbackgroundImage);
+    UnloadTexture(highscorebg);
 
     UnloadSound(hitSound);
     UnloadSound(gameOverSound);

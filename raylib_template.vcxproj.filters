@@ -50,4 +50,9 @@
       <Filter>Source Files\Assets</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Source\Assets\hoveringSound.mp3">
+      <Filter>Source Files\Assets</Filter>
+    </Media>
+  </ItemGroup>
 </Project>

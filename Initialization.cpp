@@ -20,7 +20,7 @@ void Level::Initialization()
     playButton = { { (float) screenWidth / 2 - 100, (float)screenHeight / 2 - 25, 200, 50 }, "Play", false };
     highscoreButton = { { (float) screenWidth / 2 - 100, (float)screenHeight / 2 + 50, 200, 50 }, "High Score", false };
     exitButton = { { (float) screenWidth / 2 - 100, (float) screenHeight / 2 + 125, 200, 50 }, "Exit", false };
-    backButton = { { (float)screenWidth / 2 - 100, (float)screenHeight / 2 + 50, 200, 50 }, "Back", false };
+    backButton = { { (float)screenWidth / 2 - 100, (float)screenHeight / 2 + 125, 200, 50 }, "Back", false };
     retryButton = { { (float)screenWidth / 2 - 100, (float)screenHeight / 2 + 50, 200, 50 }, "Retry", false };
     backToMenuButton = { { (float)screenWidth / 2 - 100, (float)screenHeight / 2 + 125, 200, 50 }, "Menu", false };
 

@@ -132,6 +132,8 @@ void Level::Update()
         {
             gameState = MENU; // Transition back to the MENU state
         }
+
+        backButton.isHighlighted = CheckCollisionPointRec(GetMousePosition(), backButton.rect);
     }
     else if (gameState == GAME_OVER)
     {

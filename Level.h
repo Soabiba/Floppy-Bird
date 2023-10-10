@@ -92,6 +92,7 @@ private:
     Texture2D pipeImage; // Pipe Image
     Texture2D mainbackgroundImage;
     Texture2D endbackgroundImage;
+    Texture2D highscorebg;
 
     Sound hitSound;
     Sound gameOverSound;

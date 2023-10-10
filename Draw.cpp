@@ -60,10 +60,10 @@ void Level::Draw()
     }
     else if (gameState == HIGH_SCORE)
     {
-        
+        DrawTexture(highscorebg, 0, 0, WHITE);
       
 
-        DrawButton(backButton, false); 
+        DrawButton(backButton, backButton.isHighlighted);
         
 
     }
