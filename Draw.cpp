@@ -62,10 +62,15 @@ void Level::Draw()
     {
         DrawTexture(highscorebg, 0, 0, WHITE);
       
+        DrawHighScores();
 
         DrawButton(backButton, backButton.isHighlighted);
         
 
+    }
+    else if(gameState == WRITE_HIGHSCORE)
+    { 
+        DrawWriteNameScore();
     }
     else if (gameState == GAME_OVER)
     {
@@ -105,3 +110,69 @@ void Level::DrawButton(Button button, bool isHighlighted)
     DrawText(button.text, textX, textY, 23, green);
 }
 
+void Level::DrawHighScores()
+{
+    // Try to open the binary file for reading
+    FILE* file = nullptr;
+    if (fopen_s(&file, "HighScore.bin", "rb") == 0 && file != nullptr)
+    {
+        HighScore scores[5];
+
+        fread(scores, sizeof(HighScore), 5, file);
+
+        fclose(file);
+
+        // Now, display the high scores in the high score screen
+        for (int i = 0; i < 5; i++)
+        {
+            char scoreText[128];
+            snprintf(scoreText, sizeof(scoreText), "High Score #%d: Name: %s, Score: %d", i + 1, scores[i].name, scores[i].score);
+            DrawText(scoreText, (screenWidth - MeasureText(scoreText, 20)) / 2, 100 + i * 30, 20, YELLOW);
+        }
+    }
+    else
+    {
+        // File doesn't exist or couldn't be opened, display a message
+        DrawText("No High Scores Available", (screenWidth - MeasureText("No High Scores Available", 20)) / 2, 100, 20, DARKGRAY);
+    }
+
+    // Display the "Back" button
+    DrawButton(backButton, backButton.isHighlighted);
+}
+
+
+void Level::DrawWriteNameScore()
+{
+    if (nameConfirmed)
+    {
+        // Display the player's name and score
+        std::string playerNameAndScore = "Name: " + name + " Score: " + std::to_string(highscore.score);
+        DrawText(playerNameAndScore.c_str(), 240, 140, 20, GRAY);
+    }
+    else
+    {
+        DrawText("Enter 3 initials and press Enter to confirm.", 240, 140, 20, GRAY);
+        DrawRectangleRec(textBox, LIGHTGRAY);
+
+        if (mouseOnText)
+        {
+            DrawRectangleLines(static_cast<int>(textBox.x), static_cast<int>(textBox.y), static_cast<int>(textBox.width), static_cast<int>(textBox.height), RED);
+            DrawText(name.c_str(), static_cast<int>(textBox.x + 5), static_cast<int>(textBox.y + 8), 40, MAROON);
+
+            if (letterCount < MAX_INPUT_CHARS)
+            {
+                // Draw blinking underscore character
+                if (((framesCounter / 20) % 2) == 0)
+                {
+                    DrawText("_", static_cast<int>(textBox.x + 8 + MeasureText(name.c_str(), 40)), static_cast<int>(textBox.y + 12), 40, BLUE);
+                }
+            }
+           
+        }
+        else
+        {
+            DrawRectangleLines(static_cast<int>(textBox.x), static_cast<int>(textBox.y), static_cast<int>(textBox.width), static_cast<int>(textBox.height), DARKGRAY);
+            DrawText(name.c_str(), static_cast<int>(textBox.x + 5), static_cast<int>(textBox.y + 8), 40, MAROON);
+        }
+    }
+}

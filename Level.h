@@ -1,6 +1,10 @@
 #pragma once
 #include <vector>
+#include <iostream>
 #include "raylib.h"
+#include <string>
+
+
 
 enum GameState
 {
@@ -8,6 +12,7 @@ enum GameState
     GAME,
     HIGH_SCORE,
     GAME_OVER,
+    WRITE_HIGHSCORE,
     EXIT
 };
 
@@ -86,6 +91,31 @@ private:
 
     std::vector<HighScore> highScores; 
 
+    void LoadHighScores();
+    void DisplayHighScores();//debugging
+    void DrawHighScores();
+
+#define MAX_INPUT_CHARS 3
+
+    int letterCount = 0;
+
+    Rectangle textBox = { screenWidth / 2.0f - 100, 180, 225, 50 };
+
+    bool mouseOnText = false;
+
+    // char nameCharArray[MAX_INPUT_CHARS + 1] = "\0";     
+    std::string name;
+
+    int framesCounter = 0;
+   
+
+
+    //std::string playerName; // To store the player's name
+    bool nameConfirmed;
+
+    void WriteHighScoreToFile();
+    void WriteName();
+    void DrawWriteNameScore();
 
     // Textures
     Texture2D backgroundImage;  // Background Image 
