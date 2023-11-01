@@ -68,88 +68,79 @@ void Level::Update()
         double currentTime = GetTime();
         passedTime = currentTime - Time;
 
+        timeSinceLastPipeSpawn += passedTime;
+
+        UpdatePipes();
+        ManagePipes();
 
 
-        for (auto& rect : pipes)
-        {
-            if (!rect.isDead)
-            {
-                rect.velocity.x = -5 - static_cast<float>(passedTime * 0.1);
-                rect.size.x += rect.velocity.x;
+      
+                // Collision between floopy and pipes
+                for (const Pipe& pipe : activePipes) {
+                    if (CheckCollisionRecs(floopy.rec, pipe.size)) {
+
+                        //gameOver = true;
+                        PlaySound(gameOverSound);
 
 
-                if (rect.size.x + rect.size.width < 0)
-                {
-
-                    rect.size.x = static_cast<float>(screenWidth);
-
-
-                    rect.isScored = false;
-                }
-            }
-        }
-
-        
-
-
-        //Collision 
-        for (auto& rect : pipes)
-        {
-            if (!floopy.isDead)
-            {
-                // Collision between floopy and pipes checker
-                if (CheckCollisionRecs(floopy.rec, rect.size))
-                {
-
-                    //gameOver = true;
-                    PlaySound(gameOverSound);
-
-
-                    bool isHighScore = false;
-                    for (const HighScore& score : highScores)
-                    {
-                        if (highscore.score > score.score)
+                        bool isHighScore = false;
+                        for (const HighScore& score : highScores)
                         {
-                            isHighScore = true;
-                            break;
+                            if (highscore.score > score.score)
+                            {
+                                isHighScore = true;
+                                break;
+                            }
+                        }
+
+                        if (isHighScore)
+                        {
+
+                            name = "";
+                            letterCount = 0;
+
+                            gameState = WRITE_HIGHSCORE;
+
+
+                        }
+                        else
+                        {
+                            gameState = GAME_OVER;
+                        }
+
+                    }
+                    
+                    for (auto& pipe : activePipes) {
+                        if (!floopy.isDead) {
+                            // Collision between floopy and pipes checker
+                            if (CheckCollisionRecs(floopy.rec, pipe.size)) {
+                                // Handle collision with the pipe
+                                floopy.isDead = true;  // Set the player's state to "dead"
+                                PlaySound(gameOverSound);
+                            }
+                        }
+
+                        if (!pipe.isDead && !pipe.isScored) {
+                            if (floopy.rec.x > pipe.size.x + pipe.size.width) {
+                                pipe.isScored = true;
+                                PlaySound(hitSound);
+                                highscore.score++;  // Increase the player's score
+                            }
                         }
                     }
 
-                    if (isHighScore)
-                    {
-
-                        name = ""; 
-                        letterCount = 0;
-                        
-                        gameState = WRITE_HIGHSCORE;
-                        
-
-                    }
-                    else
-                    {
-                        gameState = GAME_OVER;
-                    }
-
-                   
-
-                   // printf("game over");
                 }
 
 
-                if (!rect.isDead && !rect.isScored)
-                {
-                    if (floopy.rec.x > rect.size.x + rect.size.width)
-                    {
-
-                        rect.isScored = true;
-                        PlaySound(hitSound);
-                        highscore.score++;
+                for (Pipe& rect : activePipes) {
+                    if (!rect.isDead && !rect.isScored) {
+                        if (floopy.rec.x > rect.size.x + rect.size.width) {
+                            rect.isScored = true;
+                            PlaySound(hitSound);
+                            highscore.score++;
+                        }
                     }
                 }
-            }
-        }
-
-
     }
 
     else if (gameState == HIGH_SCORE)
@@ -164,6 +155,7 @@ void Level::Update()
     }
     else if (gameState == GAME_OVER)
     {
+
    
         if (CheckCollisionPointRec(GetMousePosition(), retryButton.rect) && IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
         {
@@ -285,4 +277,60 @@ void Level::WriteName()
     }
 
     
+}
+
+
+
+void Level::UpdatePipes() {
+    for (auto it = activePipes.begin(); it != activePipes.end();) {
+        Pipe& pipe = *it;
+
+        // Update the pipe's position based on its velocity
+        pipe.size.x += pipe.velocity.x;
+
+        // Check if the pipe has gone off-screen
+        if (pipe.size.x + pipe.size.width < 0) {
+            it = activePipes.erase(it); // Remove off-screen pipe
+        }
+        else {
+            ++it;
+        }
+    }
+}
+
+void Level::ManagePipes() {
+    if (ShouldSpawnNewPipe()) {
+        SpawnPipe();
+        timeSinceLastPipeSpawn = 0.0;  // Reset the timer
+    }
+}
+
+
+void Level::SpawnPipe() {
+    if (activePipes.size() < maxActivePipes) {
+        int gapSize = 190;  // Set the desired gap size
+        int gapPosition = GetRandomValue(gapSize, screenHeight - gapSize);
+
+        Pipe topPipes = {};
+        topPipes.size = { (float)screenWidth, 0, 50, (float)gapPosition - gapSize / 2 };
+        topPipes.velocity = { -5, 0 };
+        topPipes.isDead = false;
+        topPipes.isScored = false;
+        activePipes.push_back(topPipes);
+
+        Pipe bottomPipes = {};
+        bottomPipes.size = { (float)screenWidth, (float)gapPosition + gapSize / 2, 50, (float)screenHeight - gapPosition - gapSize / 2 };
+        bottomPipes.velocity = { -5, 0 };
+        bottomPipes.isDead = false;
+        bottomPipes.isScored = false;
+        activePipes.push_back(bottomPipes);
+    }
+}
+
+
+
+bool Level::ShouldSpawnNewPipe() {
+   
+    const double pipeSpawnInterval = 100.0; // Adjust this value to control the interval
+    return timeSinceLastPipeSpawn >= pipeSpawnInterval;
 }

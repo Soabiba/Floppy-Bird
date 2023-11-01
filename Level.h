@@ -42,7 +42,24 @@ private:
     double Time;  
     double passedTime;
 
-    
+
+
+    void Variables();
+    void SetupMenuButtons();
+    void floopyInit();
+
+
+    void DeSound();
+    void DeTexture();
+
+    void UploadSound();
+    void UploadTextures();
+
+
+   
+
+
+
     struct Button
     {
         Rectangle rect;
@@ -66,13 +83,18 @@ private:
         bool isDead;
     }; std::vector<Collectibles> collectibles;
 
-    struct Pipes
-    {
-        Rectangle size;
-        Vector2 velocity;
-        bool isDead;
-        bool isScored;
-    };  std::vector<Pipes> pipes;
+    struct Pipe {
+        Rectangle size;    // Position and size of the pipe
+        Vector2 velocity;  // Velocity of the pipe
+        bool isDead;       // Flag to track if the pipe is off-screen
+        bool isScored;     // Flag to track if the pipe has been scored
+    };
+
+    std::vector<Pipe> pipes;
+    const int maxActivePipes = 14; // Adjust the limit as needed
+    std::vector<Pipe> activePipes;
+
+
    
 
     struct Floopy
@@ -82,6 +104,7 @@ private:
         bool isDead;
     }; Floopy floopy;
 
+    int floopyY;
 
     struct HighScore
     {
@@ -92,8 +115,9 @@ private:
     std::vector<HighScore> highScores; 
 
     void LoadHighScores();
-    void DisplayHighScores();//debugging
+   // void DisplayHighScores();//debugging
     void DrawHighScores();
+    void LoadLevelFromFile(const char* fileName);
 
 #define MAX_INPUT_CHARS 3
 
@@ -116,6 +140,31 @@ private:
     void WriteHighScoreToFile();
     void WriteName();
     void DrawWriteNameScore();
+
+    void DrawMenu();
+    void DrawGame();
+    void DrawHighScoreScreen();
+    void DrawGameOverScreen();
+    void DrawBackground();
+    void DrawFloopy();
+    void DrawScore();
+    void DrawNameEntryScreen();
+    void DrawTextBox();
+    void DrawHighlightedTextBox();
+    void DrawNormalTextBox();
+    void DrawHighScoreEntry(int rank, HighScore score);
+
+    void SpawnPipe();
+    void UpdatePipes();
+    void ManagePipes();
+    void DrawPipes();
+    bool ShouldSpawnNewPipe();
+    
+    const double pipeSpawnInterval = 2.0;  // Adjust this interval as needed
+    double timeSinceLastPipeSpawn = 0.0;    // Track time since the last pipe spawn
+    const int gapBetweenRectangles = 150; // You can adjust the gap size as needed
+
+
 
     // Textures
     Texture2D backgroundImage;  // Background Image 
