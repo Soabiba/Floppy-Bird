@@ -12,6 +12,8 @@ void Level::Initialization()
 
     LoadHighScores();
 
+    SaveLevelToFile("level.txt");
+    
     LoadLevelFromFile("level.txt");
 
 }
@@ -24,7 +26,7 @@ void Level::Variables() {
     Time = GetTime();
     gameOver = false;
     activePipes.clear();
-    int gapBetweenRectangles = 150;
+  
 }
 
 void Level::SetupMenuButtons() {
@@ -42,19 +44,19 @@ void Level::floopyInit() {
     floopy.rec.x = 100;
     floopy.rec.y = (screenHeight - floopy.rec.height) / 2;
     floopy.speed = 5;
-    int floopyY = screenHeight / 2;
+  
 }
 
 
 void Level::LoadHighScores()
 {
-    highScores.clear(); // Clear the existing high scores
+    highScores.clear(); 
 
-    // Try to open the binary file for reading
+   
     FILE* file = nullptr;
     if (fopen_s(&file, "HighScore.bin", "rb") == 0 && file != nullptr)
     {
-        // File exists, read high scores
+        
         for (int i = 0; i < 5; i++)
         {
             HighScore score;
@@ -68,16 +70,16 @@ void Level::LoadHighScores()
     }
     else
     {
-        // File doesn't exist or couldn't be opened, initialize with default scores
+       
         for (int i = 0; i < 5; i++)
         {
-            HighScore score;
+            HighScore score = {};
             score.name[0] = '\0'; // Empty name
             score.score = 0;
             highScores.push_back(score);
         }
 
-        // Attempt to create and write the default high scores to the file
+       
         if (fopen_s(&file, "HighScore.bin", "wb") == 0 && file != nullptr)
         {
             for (int i = 0; i < 5; i++)
@@ -88,21 +90,20 @@ void Level::LoadHighScores()
         }
     }
 
-     name = ""; // Initialize the player's name
+     name = ""; 
     nameConfirmed = false;
 
 }
 
-
-
-void Level::LoadLevelFromFile(const char* fileName) {
-    std::ifstream file(fileName);
+void Level::SaveLevelToFile(const char* fileName) {
+    std::ofstream file(fileName, std::ios::trunc); 
 
     if (file.is_open()) {
         
+        for (const Pipe& pipe : activePipes) {
+            file << pipe.size.x << " " << pipe.size.y << " " << pipe.size.width << " " << pipe.size.height << std::endl;
+        }
+
         file.close();
-    }
-    else {
-       //debug
     }
 }

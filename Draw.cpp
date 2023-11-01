@@ -2,11 +2,6 @@
 #include "Level.h"
 
 
-
-
-#include "raylib.h"
-#include "Level.h"
-
 void Level::Draw()
 {
     BeginDrawing();
