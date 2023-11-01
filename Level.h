@@ -160,6 +160,11 @@ private:
     void DrawPipes();
     bool ShouldSpawnNewPipe();
     
+
+    void floopyInput();
+    void endGameInteractions();
+    void collisionAndScore();
+
     const double pipeSpawnInterval = 2.0;  // Adjust this interval as needed
     double timeSinceLastPipeSpawn = 0.0;    // Track time since the last pipe spawn
     const int gapBetweenRectangles = 150; // You can adjust the gap size as needed
