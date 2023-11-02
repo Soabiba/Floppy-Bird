@@ -16,6 +16,7 @@ void Level::Initialization()
     
     LoadLevelFromFile("level.txt");
 
+   // ResetHighScores(); this is for you Filippo to ccheck the highscore
 }
 
 
@@ -106,4 +107,21 @@ void Level::SaveLevelToFile(const char* fileName) {
 
         file.close();
     }
+}
+
+
+void Level::ResetHighScores() {
+    highScores.clear(); 
+  
+    // Debug for you Filippo
+    
+    for (int i = 0; i < 5; i++) {
+        HighScore score = {};
+        score.name[0] = '\0'; 
+        score.score = 0;
+        highScores.push_back(score);
+    }
+
+    
+    WriteHighScoreToFile();
 }

@@ -57,7 +57,7 @@ private:
 
 
    
-
+    void ResetHighScores();
 
 
     struct Button
