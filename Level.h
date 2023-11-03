@@ -4,8 +4,7 @@
 #include "raylib.h"
 #include <string>
 
-
-
+// Define different game states
 enum GameState
 {
     MENU,
@@ -16,25 +15,19 @@ enum GameState
     EXIT
 };
 
-
 class Level
 {
-
-
 public:
-    void Initialization();
-    void Resources();
-    void Update();
-    void Draw();
-    void De_Initialization();
-
-
+    void Initialization(); // Initialize the game
+    void Resources();     // Load game resources
+    void Update();        // Update game logic
+    void Draw();          // Draw game elements
+    void De_Initialization(); // Deinitialize and clean up resources
 
     int screenWidth = 1250;
     int screenHeight = 600;
 
 private:
-
     GameState gameState;
     bool gameOver;
     bool mainScreen;
@@ -42,42 +35,45 @@ private:
     double Time;
     double passedTime;
 
-
-
+    // Initialize game variables and setup menu buttons
     void Variables();
     void SetupMenuButtons();
     void floopyInit();
 
-
+    // Deinitialize game sounds and textures
     void DeSound();
     void DeTexture();
 
+    // Load game sounds and textures
     void UploadSound();
     void UploadTextures();
 
-
-
+    // Reset the high scores
     void ResetHighScores();
 
-
+    // Structure to define buttons
     struct Button
     {
         Rectangle rect;
         const char* text;
         bool isHighlighted;
-    }; Button playButton, highscoreButton, exitButton, backButton, retryButton, backToMenuButton;
+    };
+
+    Button playButton, highscoreButton, exitButton, backButton, retryButton, backToMenuButton;
 
     void DrawButton(Button button, bool isHighlighted);
 
-
-    struct Background {
+    // Structure for parallax scrolling background
+    struct Background
+    {
         float scrollSpeed = 2.0f;
         float offsetX = 0.0f;
+    };
 
-    }; Background background;
+    Background background;
 
-
-    struct Pipe 
+    // Structure to define pipes
+    struct Pipe
     {
         Rectangle size;    // Position and size of the pipe
         Vector2 velocity;  // Velocity of the pipe
@@ -89,28 +85,29 @@ private:
     const int maxActivePipes = 14; // Adjust the limit as needed
     std::vector<Pipe> activePipes;
 
-
-
-
+    // Structure for the main character (Floopy)
     struct Floopy
     {
-        Rectangle rec = { 0,0,40,40 };
+        Rectangle rec = { 0, 0, 40, 40 };
         int speed = 200;
         bool isDead;
-    }; Floopy floopy;
+    };
 
+    Floopy floopy;
     int floopyY;
 
+    // Structure to store high scores
     struct HighScore
     {
         char name[4];
         int score;
-    }; HighScore highscore;
+    };
 
+    HighScore highscore;
     std::vector<HighScore> highScores;
 
+    // Load high scores from a file
     void LoadHighScores();
-    // void DisplayHighScores();//debugging
     void DrawHighScores();
     void LoadLevelFromFile(const char* fileName);
     void SaveLevelToFile(const char* fileName);
@@ -118,25 +115,18 @@ private:
 #define MAX_INPUT_CHARS 3
 
     int letterCount = 0;
-
     Rectangle textBox = { screenWidth / 2.0f - 100, 180, 225, 50 };
-
     bool mouseOnText = false;
-   
     std::string name;
-
     int framesCounter = 0;
-
     int currentFrame;
     int NUM_FRAMES;
     int frameWidth;
-
     bool nameConfirmed;
 
     void WriteHighScoreToFile();
     void WriteName();
     void DrawWriteNameScore();
-
     void DrawMenu();
     void DrawGame();
     void DrawHighScoreScreen();
@@ -156,23 +146,19 @@ private:
     void DrawPipes();
     bool ShouldSpawnNewPipe();
 
-
     void floopyInput();
     void endGameInteractions();
     void collisionAndScore();
 
     void UpdateFloopyAnimation();
-
     float animationFrameDelay;
 
     const double pipeSpawnInterval = 2.0;  // Adjust this interval as needed
     double timeSinceLastPipeSpawn = 0.0;    // Track time since the last pipe spawn
     const int gapBetweenRectangles = 350; // Gap between every individual pipe
 
-
-
     // Textures
-    Texture2D backgroundImage;  // Background Image 
+    Texture2D backgroundImage;  // Background Image
     Texture2D floopyAnim; // Pipe Image
     Texture2D mainbackgroundImage;
     Texture2D endbackgroundImage;
