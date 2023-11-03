@@ -22,24 +22,24 @@ class Level
 
 
 public:
-   void Initialization();
-   void Resources();
-   void Update();
-   void Draw();
-   void De_Initialization();
-   
- 
+    void Initialization();
+    void Resources();
+    void Update();
+    void Draw();
+    void De_Initialization();
+
+
 
     int screenWidth = 1250;
     int screenHeight = 600;
 
 private:
-    
+
     GameState gameState;
     bool gameOver;
     bool mainScreen;
 
-    double Time;  
+    double Time;
     double passedTime;
 
 
@@ -56,7 +56,7 @@ private:
     void UploadTextures();
 
 
-   
+
     void ResetHighScores();
 
 
@@ -71,12 +71,12 @@ private:
 
 
     struct Background {
-        float scrollSpeed = 2.0f;   
-        float offsetX = 0.0f;       
+        float scrollSpeed = 2.0f;
+        float offsetX = 0.0f;
 
     }; Background background;
 
-   
+
     struct Collectibles {
         Rectangle size;
         Vector2 velocity;
@@ -95,11 +95,11 @@ private:
     std::vector<Pipe> activePipes;
 
 
-   
+
 
     struct Floopy
     {
-        Rectangle rec = { 0,0,40,40};
+        Rectangle rec = { 0,0,40,40 };
         int speed = 200;
         bool isDead;
     }; Floopy floopy;
@@ -112,10 +112,10 @@ private:
         int score;
     }; HighScore highscore;
 
-    std::vector<HighScore> highScores; 
+    std::vector<HighScore> highScores;
 
     void LoadHighScores();
-   // void DisplayHighScores();//debugging
+    // void DisplayHighScores();//debugging
     void DrawHighScores();
     void LoadLevelFromFile(const char* fileName);
     void SaveLevelToFile(const char* fileName);
@@ -132,9 +132,10 @@ private:
     std::string name;
 
     int framesCounter = 0;
-   
 
-
+    int currentFrame;
+    int NUM_FRAMES;
+    int frameWidth;
 
     //std::string playerName; // To store the player's name
     bool nameConfirmed;
@@ -161,11 +162,15 @@ private:
     void ManagePipes();
     void DrawPipes();
     bool ShouldSpawnNewPipe();
-    
+
 
     void floopyInput();
     void endGameInteractions();
     void collisionAndScore();
+
+    void UpdateFloopyAnimation();
+
+    float animationFrameDelay;
 
     const double pipeSpawnInterval = 2.0;  // Adjust this interval as needed
     double timeSinceLastPipeSpawn = 0.0;    // Track time since the last pipe spawn
@@ -175,7 +180,7 @@ private:
 
     // Textures
     Texture2D backgroundImage;  // Background Image 
-    Texture2D pipeImage; // Pipe Image
+    Texture2D floopyAnim; // Pipe Image
     Texture2D mainbackgroundImage;
     Texture2D endbackgroundImage;
     Texture2D highscorebg;

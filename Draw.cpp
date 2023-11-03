@@ -61,7 +61,25 @@ void Level::DrawBackground()
 
 void Level::DrawFloopy()
 {
-    DrawRectangle(static_cast<int>(floopy.rec.x), static_cast<int>(floopy.rec.y), static_cast<int>(floopy.rec.width), static_cast<int>(floopy.rec.height), BLUE);
+
+    Rectangle sourceRect = {
+     static_cast<float>(frameWidth * currentFrame),
+     0,
+     static_cast<float>(frameWidth),
+     static_cast<float>(floopyAnim.height)
+    };
+
+    Vector2 floopyPosition = {
+        floopy.rec.x,
+        floopy.rec.y
+    };
+
+    DrawTextureRec(floopyAnim, sourceRect, floopyPosition, WHITE);
+
+
+
+
+    //  DrawRectangle(static_cast<int>(floopy.rec.x), static_cast<int>(floopy.rec.y), static_cast<int>(floopy.rec.width), static_cast<int>(floopy.rec.height), BLUE);
 }
 
 void Level::DrawScore()
@@ -182,6 +200,4 @@ void Level::DrawButton(Button button, bool isHighlighted)
     DrawRectangleRec(button.rect, isHighlighted ? LIGHTGRAY : BLACK);
     DrawText(button.text, (int)button.rect.x + 70, (int)button.rect.y + 10, 20, RED);
 }
-
-
 

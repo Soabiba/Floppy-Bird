@@ -5,10 +5,10 @@ void Level::De_Initialization()
 {
     DeSound();
     DeTexture();
- 
+
     activePipes.clear();
     collectibles.clear();
-    
+
     CloseAudioDevice();
 
     // De-Initialization
@@ -18,15 +18,17 @@ void Level::De_Initialization()
 
 }
 
-void Level::DeSound() {
+void Level::DeSound() 
+{
     UnloadSound(hitSound);
     UnloadSound(gameOverSound);
     UnloadSound(hoveringSound);
 }
 
-void Level::DeTexture() {
+void Level::DeTexture() 
+{
     UnloadTexture(backgroundImage);
-    UnloadTexture(pipeImage);
+    UnloadTexture(floopyAnim);
     UnloadTexture(mainbackgroundImage);
     UnloadTexture(endbackgroundImage);
     UnloadTexture(highscorebg);

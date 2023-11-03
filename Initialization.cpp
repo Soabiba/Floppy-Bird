@@ -13,10 +13,10 @@ void Level::Initialization()
     LoadHighScores();
 
     SaveLevelToFile("level.txt");
-    
+
     LoadLevelFromFile("level.txt");
 
-   // ResetHighScores(); this is for you Filippo to ccheck the highscore
+    // ResetHighScores(); this is for you Filippo to ccheck the highscore
 }
 
 
@@ -27,7 +27,11 @@ void Level::Variables() {
     Time = GetTime();
     gameOver = false;
     activePipes.clear();
-  
+    currentFrame = 0;
+    NUM_FRAMES = 9;
+    frameWidth = floopyAnim.width / NUM_FRAMES;
+    animationFrameDelay = 5.0f;
+
 }
 
 void Level::SetupMenuButtons() {
@@ -45,19 +49,19 @@ void Level::floopyInit() {
     floopy.rec.x = 100;
     floopy.rec.y = (screenHeight - floopy.rec.height) / 2;
     floopy.speed = 5;
-  
+
 }
 
 
 void Level::LoadHighScores()
 {
-    highScores.clear(); 
+    highScores.clear();
 
-   
+
     FILE* file = nullptr;
     if (fopen_s(&file, "HighScore.bin", "rb") == 0 && file != nullptr)
     {
-        
+
         for (int i = 0; i < 5; i++)
         {
             HighScore score;
@@ -71,7 +75,7 @@ void Level::LoadHighScores()
     }
     else
     {
-       
+
         for (int i = 0; i < 5; i++)
         {
             HighScore score = {};
@@ -80,7 +84,7 @@ void Level::LoadHighScores()
             highScores.push_back(score);
         }
 
-       
+
         if (fopen_s(&file, "HighScore.bin", "wb") == 0 && file != nullptr)
         {
             for (int i = 0; i < 5; i++)
@@ -91,16 +95,16 @@ void Level::LoadHighScores()
         }
     }
 
-     name = ""; 
+    name = "";
     nameConfirmed = false;
 
 }
 
 void Level::SaveLevelToFile(const char* fileName) {
-    std::ofstream file(fileName, std::ios::trunc); 
+    std::ofstream file(fileName, std::ios::trunc);
 
     if (file.is_open()) {
-        
+
         for (const Pipe& pipe : activePipes) {
             file << pipe.size.x << " " << pipe.size.y << " " << pipe.size.width << " " << pipe.size.height << std::endl;
         }
@@ -111,17 +115,17 @@ void Level::SaveLevelToFile(const char* fileName) {
 
 
 void Level::ResetHighScores() {
-    highScores.clear(); 
-  
+    highScores.clear();
+
     // Debug for you Filippo
-    
+
     for (int i = 0; i < 5; i++) {
         HighScore score = {};
-        score.name[0] = '\0'; 
+        score.name[0] = '\0';
         score.score = 0;
         highScores.push_back(score);
     }
 
-    
+
     WriteHighScoreToFile();
 }

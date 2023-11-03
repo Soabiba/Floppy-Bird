@@ -15,7 +15,7 @@ void Level::UploadSound() {
 
 void Level::UploadTextures() {
 	backgroundImage = LoadTexture("./Source/Assets/Background_Asset.png");
-	pipeImage = LoadTexture("./Source/Assets/Pipe_Asset.png");
+	floopyAnim = LoadTexture("./Source/Assets/floopy.png");
 	mainbackgroundImage = LoadTexture("./Source/Assets/mainmenubg.png");
 	endbackgroundImage = LoadTexture("./Source/Assets/endgame.png");
 	highscorebg = LoadTexture("./Source/Assets/highscorebg.png");

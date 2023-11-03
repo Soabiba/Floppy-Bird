@@ -53,6 +53,8 @@ void Level::Update()
         endGameInteractions();
         collisionAndScore();
 
+        UpdateFloopyAnimation();
+
     }
 
     else if (gameState == HIGH_SCORE)
@@ -164,6 +166,15 @@ void Level::collisionAndScore() {
             }
         }
 
+    }
+}
+
+
+void Level::UpdateFloopyAnimation() {
+
+    currentFrame++;
+    if (currentFrame >= NUM_FRAMES) {
+        currentFrame = 0;
     }
 }
 
@@ -338,7 +349,7 @@ void Level::SpawnPipe() {
 
 bool Level::ShouldSpawnNewPipe() {
 
-    const double pipeSpawnInterval = 100.0; 
+    const double pipeSpawnInterval = 100.0;
     return timeSinceLastPipeSpawn >= pipeSpawnInterval;
 }
 
@@ -347,10 +358,10 @@ void Level::LoadLevelFromFile(const char* fileName) {
 
 
     if (file.is_open()) {
-       
+
         activePipes.clear();
 
-        
+
         std::string line;
         while (std::getline(file, line)) {
             std::istringstream iss(line);
@@ -362,7 +373,7 @@ void Level::LoadLevelFromFile(const char* fileName) {
                 tokens.push_back(token);
             }
 
-            
+
             if (tokens.size() >= 4) {
                 Pipe newPipe = {};
                 newPipe.size.x = std::stof(tokens[0]);
@@ -370,13 +381,13 @@ void Level::LoadLevelFromFile(const char* fileName) {
                 newPipe.size.width = std::stof(tokens[2]);
                 newPipe.size.height = std::stof(tokens[3]);
 
-                
+
                 activePipes.push_back(newPipe);
             }
             else {
-                
+
                 std::cerr << "Error: Invalid or incomplete data in level file." << std::endl;
-                activePipes.clear(); 
+                activePipes.clear();
                 break;
             }
         }
@@ -387,5 +398,3 @@ void Level::LoadLevelFromFile(const char* fileName) {
         std::cerr << "Error: Could not open the level file." << std::endl;
     }
 }
-
-
