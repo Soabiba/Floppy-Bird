@@ -180,7 +180,7 @@ void Level::DrawHighScoreEntry(int rank, HighScore score)
 {
     char scoreText[128];
     snprintf(scoreText, sizeof(scoreText), "High Score #%d: Name: %s, Score: %d", rank + 1, score.name, score.score);
-    DrawText(scoreText, (screenWidth - MeasureText(scoreText, 20)) / 2, 100 + rank * 30, 20, YELLOW);
+    DrawText(scoreText, (screenWidth - MeasureText(scoreText, 30)) / 2, 150 + rank * 30, 30, YELLOW);
 }
 
 void Level::DrawPipes()
