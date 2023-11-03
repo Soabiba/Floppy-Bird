@@ -1,6 +1,10 @@
 #pragma once
 #include <vector>
+#include <iostream>
 #include "raylib.h"
+#include <string>
+
+
 
 enum GameState
 {
@@ -8,6 +12,7 @@ enum GameState
     GAME,
     HIGH_SCORE,
     GAME_OVER,
+    WRITE_HIGHSCORE,
     EXIT
 };
 
@@ -37,7 +42,24 @@ private:
     double Time;  
     double passedTime;
 
-    
+
+
+    void Variables();
+    void SetupMenuButtons();
+    void floopyInit();
+
+
+    void DeSound();
+    void DeTexture();
+
+    void UploadSound();
+    void UploadTextures();
+
+
+   
+    void ResetHighScores();
+
+
     struct Button
     {
         Rectangle rect;
@@ -61,13 +83,18 @@ private:
         bool isDead;
     }; std::vector<Collectibles> collectibles;
 
-    struct Pipes
-    {
-        Rectangle size;
-        Vector2 velocity;
-        bool isDead;
-        bool isScored;
-    };  std::vector<Pipes> pipes;
+    struct Pipe {
+        Rectangle size;    // Position and size of the pipe
+        Vector2 velocity;  // Velocity of the pipe
+        bool isDead;       // Flag to track if the pipe is off-screen
+        bool isScored;     // Flag to track if the pipe has been scored
+    };
+
+    std::vector<Pipe> pipes;
+    const int maxActivePipes = 14; // Adjust the limit as needed
+    std::vector<Pipe> activePipes;
+
+
    
 
     struct Floopy
@@ -77,6 +104,7 @@ private:
         bool isDead;
     }; Floopy floopy;
 
+    int floopyY;
 
     struct HighScore
     {
@@ -85,6 +113,64 @@ private:
     }; HighScore highscore;
 
     std::vector<HighScore> highScores; 
+
+    void LoadHighScores();
+   // void DisplayHighScores();//debugging
+    void DrawHighScores();
+    void LoadLevelFromFile(const char* fileName);
+    void SaveLevelToFile(const char* fileName);
+
+#define MAX_INPUT_CHARS 3
+
+    int letterCount = 0;
+
+    Rectangle textBox = { screenWidth / 2.0f - 100, 180, 225, 50 };
+
+    bool mouseOnText = false;
+
+    // char nameCharArray[MAX_INPUT_CHARS + 1] = "\0";     
+    std::string name;
+
+    int framesCounter = 0;
+   
+
+
+
+    //std::string playerName; // To store the player's name
+    bool nameConfirmed;
+
+    void WriteHighScoreToFile();
+    void WriteName();
+    void DrawWriteNameScore();
+
+    void DrawMenu();
+    void DrawGame();
+    void DrawHighScoreScreen();
+    void DrawGameOverScreen();
+    void DrawBackground();
+    void DrawFloopy();
+    void DrawScore();
+    void DrawNameEntryScreen();
+    void DrawTextBox();
+    void DrawHighlightedTextBox();
+    void DrawNormalTextBox();
+    void DrawHighScoreEntry(int rank, HighScore score);
+
+    void SpawnPipe();
+    void UpdatePipes();
+    void ManagePipes();
+    void DrawPipes();
+    bool ShouldSpawnNewPipe();
+    
+
+    void floopyInput();
+    void endGameInteractions();
+    void collisionAndScore();
+
+    const double pipeSpawnInterval = 2.0;  // Adjust this interval as needed
+    double timeSinceLastPipeSpawn = 0.0;    // Track time since the last pipe spawn
+    const int gapBetweenRectangles = 150; // You can adjust the gap size as needed
+
 
 
     // Textures

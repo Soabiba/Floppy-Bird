@@ -55,4 +55,14 @@
       <Filter>Source Files\Assets</Filter>
     </Media>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\Assets\HighScore.bin">
+      <Filter>Source Files\Assets</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Source\Assets\level.txt">
+      <Filter>Source Files\Assets</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

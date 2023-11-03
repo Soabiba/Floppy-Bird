@@ -3,18 +3,20 @@
 
 void Level::Resources()
 {
-	//---------------Textures------------------------------------------------
-	
+	UploadSound();
+	UploadTextures();
+}
 
-	//Upload textures for Game
+void Level::UploadSound() {
+	hitSound = LoadSound("./Source/Assets/Hitting.mp3");
+	gameOverSound = LoadSound("./Source/Assets/gameOver.mp3");
+	hoveringSound = LoadSound("./Source/Assets/hovering sound.mp3");
+}
 
+void Level::UploadTextures() {
 	backgroundImage = LoadTexture("./Source/Assets/Background_Asset.png");
 	pipeImage = LoadTexture("./Source/Assets/Pipe_Asset.png");
 	mainbackgroundImage = LoadTexture("./Source/Assets/mainmenubg.png");
 	endbackgroundImage = LoadTexture("./Source/Assets/endgame.png");
 	highscorebg = LoadTexture("./Source/Assets/highscorebg.png");
-	
-	hitSound = LoadSound("./Source/Assets/Hitting.mp3");
-	gameOverSound = LoadSound("./Source/Assets/gameOver.mp3");
-	hoveringSound = LoadSound("./Source/Assets/hovering sound.mp3");
 }

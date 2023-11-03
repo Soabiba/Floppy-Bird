@@ -178,6 +178,12 @@
   <ItemGroup>
     <Media Include="Source\Assets\hoveringSound.mp3" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\Assets\HighScore.bin" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Source\Assets\level.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
