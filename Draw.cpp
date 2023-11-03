@@ -31,6 +31,8 @@ void Level::Draw()
     EndDrawing();
 }
 
+// Draw the main menu
+
 void Level::DrawMenu()
 {
     DrawTexture(mainbackgroundImage, 0, 0, WHITE);
@@ -39,6 +41,8 @@ void Level::DrawMenu()
     DrawButton(exitButton, exitButton.isHighlighted);
 }
 
+// Draw the game screen
+
 void Level::DrawGame()
 {
     DrawBackground();
@@ -46,6 +50,8 @@ void Level::DrawGame()
     DrawPipes();
     DrawScore();
 }
+
+// Draw the scrolling background
 
 void Level::DrawBackground()
 {
@@ -59,9 +65,11 @@ void Level::DrawBackground()
     DrawTexture(backgroundImage, -(int)background.offsetX + backgroundImage.width, 0, WHITE);
 }
 
+// Draw the Floopy character
+
 void Level::DrawFloopy()
 {
-
+    // Define the source rectangle for the animation frame
     Rectangle sourceRect = {
      static_cast<float>(frameWidth * currentFrame),
      0,
@@ -74,18 +82,18 @@ void Level::DrawFloopy()
         floopy.rec.y
     };
 
+    // Draw the Floopy character
     DrawTextureRec(floopyAnim, sourceRect, floopyPosition, WHITE);
-
-
-
-
-    //  DrawRectangle(static_cast<int>(floopy.rec.x), static_cast<int>(floopy.rec.y), static_cast<int>(floopy.rec.width), static_cast<int>(floopy.rec.height), BLUE);
 }
+
+// Draw the player's score
 
 void Level::DrawScore()
 {
     DrawText(TextFormat("Score: %d", highscore.score), screenWidth - 200, 10, 30, DARKPURPLE);
 }
+
+// Draw the high score screen
 
 void Level::DrawHighScoreScreen()
 {
@@ -94,10 +102,13 @@ void Level::DrawHighScoreScreen()
     DrawButton(backButton, backButton.isHighlighted);
 }
 
+// Draw the writing name
+
 void Level::DrawWriteNameScore()
 {
     if (nameConfirmed)
     {
+        // Display the player's name and score
         std::string playerNameAndScore = "Name: " + name + " Score: " + std::to_string(highscore.score);
         DrawText(playerNameAndScore.c_str(), 240, 140, 20, GRAY);
     }
@@ -107,11 +118,15 @@ void Level::DrawWriteNameScore()
     }
 }
 
+// Draw the name entry screen
+
 void Level::DrawNameEntryScreen()
 {
     DrawText("Enter 3 initials and press Enter to confirm.", 240, 140, 20, GRAY);
     DrawTextBox();
 }
+
+// Draw the text box for entering player initials
 
 void Level::DrawTextBox()
 {
@@ -127,6 +142,8 @@ void Level::DrawTextBox()
     }
 }
 
+// Draw the highlighted text box
+
 void Level::DrawHighlightedTextBox()
 {
     DrawRectangleLines(static_cast<int>(textBox.x), static_cast<int>(textBox.y), static_cast<int>(textBox.width), static_cast<int>(textBox.height), RED);
@@ -141,11 +158,15 @@ void Level::DrawHighlightedTextBox()
     }
 }
 
+// Draw the normal text box
+
 void Level::DrawNormalTextBox()
 {
     DrawRectangleLines(static_cast<int>(textBox.x), static_cast<int>(textBox.y), static_cast<int>(textBox.width), static_cast<int>(textBox.height), DARKGRAY);
     DrawText(name.c_str(), static_cast<int>(textBox.x + 5), static_cast<int>(textBox.y + 8), 40, MAROON);
 }
+
+// Draw the game over screen
 
 void Level::DrawGameOverScreen()
 {
@@ -153,6 +174,8 @@ void Level::DrawGameOverScreen()
     DrawButton(retryButton, retryButton.isHighlighted);
     DrawButton(backToMenuButton, backToMenuButton.isHighlighted);
 }
+
+// Draw an entry in the high scores list
 
 void Level::DrawHighScores()
 {
@@ -176,12 +199,16 @@ void Level::DrawHighScores()
     DrawButton(backButton, backButton.isHighlighted);
 }
 
+// Draw an entry in the high scores list
+
 void Level::DrawHighScoreEntry(int rank, HighScore score)
 {
     char scoreText[128];
     snprintf(scoreText, sizeof(scoreText), "High Score #%d: Name: %s, Score: %d", rank + 1, score.name, score.score);
     DrawText(scoreText, (screenWidth - MeasureText(scoreText, 30)) / 2, 150 + rank * 30, 30, SKYBLUE);
 }
+
+// Draw the game's pipes
 
 void Level::DrawPipes()
 {
@@ -194,6 +221,7 @@ void Level::DrawPipes()
     }
 }
 
+// Draw buttons with text
 
 void Level::DrawButton(Button button, bool isHighlighted)
 {

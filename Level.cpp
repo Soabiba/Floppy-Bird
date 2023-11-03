@@ -13,8 +13,8 @@ void Level::Update()
 
     if (gameState == MENU)
     {
-
-
+        // Handle MENU state interactions
+        // Check for button clicks and highlight buttons
         if (CheckCollisionPointRec(GetMousePosition(), playButton.rect) && IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
         {
             Initialization();
@@ -39,7 +39,7 @@ void Level::Update()
     }
     else if (gameState == GAME)
     {
-
+        // Handle GAME state interactions
         double currentTime = GetTime();
         passedTime = currentTime - Time;
 
@@ -59,7 +59,7 @@ void Level::Update()
 
     else if (gameState == HIGH_SCORE)
     {
-
+        // Handle HIGH_SCORE state interactions
         if (CheckCollisionPointRec(GetMousePosition(), backButton.rect) && IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
         {
             gameState = MENU; // Transition back to the MENU state
@@ -69,7 +69,7 @@ void Level::Update()
     }
     else if (gameState == GAME_OVER)
     {
-
+        // Handle interactions in the GAME_OVER state
 
         if (CheckCollisionPointRec(GetMousePosition(), retryButton.rect) && IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
         {
@@ -88,26 +88,27 @@ void Level::Update()
     }
     if (gameState == WRITE_HIGHSCORE)
     {
+        // Handle interactions in the WRITE_HIGHSCORE state
         WriteName();
     }
     else if (gameState == EXIT)
     {
-
+        // Handle interactions when exiting the game
         De_Initialization();
         exit(0);
 
     }
-
-
 }
 
 
-void Level::endGameInteractions() {
-
+void Level::endGameInteractions() 
+{
+    // Check for end-game interactions (e.g., collisions)
     for (const Pipe& pipe : activePipes) {
-        if (CheckCollisionRecs(floopy.rec, pipe.size)) {
-
-            //gameOver = true;
+        if (CheckCollisionRecs(floopy.rec, pipe.size)) 
+        {
+            // Game over interactions
+            // Set player state to "dead," play game over sound
             PlaySound(gameOverSound);
 
 
@@ -142,23 +143,28 @@ void Level::endGameInteractions() {
 }
 
 
-void Level::collisionAndScore() {
-
-    for (const Pipe& pipe : activePipes) {
-
-
-        for (auto& pipe : activePipes) {
-            if (!floopy.isDead) {
+void Level::collisionAndScore() 
+{
+    // Check for collisions between Floopy and pipes and update the score
+    for (const Pipe& pipe : activePipes) 
+    {
+        for (auto& pipe : activePipes) 
+        {
+            if (!floopy.isDead) 
+            {
                 // Collision between floopy and pipes checker
-                if (CheckCollisionRecs(floopy.rec, pipe.size)) {
+                if (CheckCollisionRecs(floopy.rec, pipe.size)) 
+                {
                     // Handle collision with the pipe
                     floopy.isDead = true;  // Set the player's state to "dead"
                     PlaySound(gameOverSound);
                 }
             }
 
-            if (!pipe.isDead && !pipe.isScored) {
-                if (floopy.rec.x > pipe.size.x + pipe.size.width) {
+            if (!pipe.isDead && !pipe.isScored) 
+            {
+                if (floopy.rec.x > pipe.size.x + pipe.size.width) 
+                {
                     pipe.isScored = true;
                     PlaySound(hitSound);
                     highscore.score++;  // Increase the player's score
@@ -170,16 +176,19 @@ void Level::collisionAndScore() {
 }
 
 
-void Level::UpdateFloopyAnimation() {
-
+void Level::UpdateFloopyAnimation() 
+{
+    // Update the animation frames for Floopy
     currentFrame++;
-    if (currentFrame >= NUM_FRAMES) {
+    if (currentFrame >= NUM_FRAMES) 
+    {
         currentFrame = 0;
     }
 }
 
 
-void Level::floopyInput() {
+void Level::floopyInput() 
+{
     //Flooypy Movement
 
     if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W))
@@ -207,6 +216,8 @@ void Level::floopyInput() {
 
 void Level::WriteHighScoreToFile()
 {
+    // Write the high scores to a binary file
+
     FILE* file = nullptr;
 
     if (fopen_s(&file, "HighScore.bin", "wb") == 0 && file != nullptr)
@@ -221,7 +232,7 @@ void Level::WriteHighScoreToFile()
 
 void Level::WriteName()
 {
-
+    // Handle player name input for high scores
     if (!nameConfirmed)
     {
         if (CheckCollisionPointRec(GetMousePosition(), textBox))
@@ -294,13 +305,15 @@ void Level::WriteName()
 
     }
 
-
 }
 
 
 
-void Level::UpdatePipes() {
-    for (auto it = activePipes.begin(); it != activePipes.end();) {
+void Level::UpdatePipes() 
+{
+    // Update the positions of active pipes
+    for (auto it = activePipes.begin(); it != activePipes.end();) 
+    {
         Pipe& pipe = *it;
 
         // Update the pipe's position 
@@ -310,22 +323,30 @@ void Level::UpdatePipes() {
         if (pipe.size.x + pipe.size.width < 0) {
             it = activePipes.erase(it); // delete off-screen pipe
         }
-        else {
+        else 
+        {
             ++it;
         }
     }
 }
 
-void Level::ManagePipes() {
-    if (ShouldSpawnNewPipe()) {
+void Level::ManagePipes() 
+{
+    // Manage pipes, including spawning new pipes
+    if (ShouldSpawnNewPipe()) 
+    {
         SpawnPipe();
         timeSinceLastPipeSpawn = 0.0;  // Reset the timer
     }
 }
 
 
-void Level::SpawnPipe() {
-    if (activePipes.size() < maxActivePipes) {
+void Level::SpawnPipe() 
+
+{
+    // Spawn a pair of pipes
+    if (activePipes.size() < maxActivePipes) 
+    {
         int gapSize = 180;  // Set the desired gap size
         int gapPosition = GetRandomValue(gapSize, screenHeight - gapSize);
 
@@ -347,17 +368,21 @@ void Level::SpawnPipe() {
 
 
 
-bool Level::ShouldSpawnNewPipe() {
-
+bool Level::ShouldSpawnNewPipe() 
+{
+    // Determine if a new pipe should be spawned
     const double pipeSpawnInterval = 400.0;
     return timeSinceLastPipeSpawn >= pipeSpawnInterval;
 }
 
-void Level::LoadLevelFromFile(const char* fileName) {
+void Level::LoadLevelFromFile(const char* fileName) 
+{
+    // Load level data from a file
     std::ifstream file(fileName);
 
 
-    if (file.is_open()) {
+    if (file.is_open()) 
+    {
 
         activePipes.clear();
 
