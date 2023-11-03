@@ -77,13 +77,8 @@ private:
     }; Background background;
 
 
-    struct Collectibles {
-        Rectangle size;
-        Vector2 velocity;
-        bool isDead;
-    }; std::vector<Collectibles> collectibles;
-
-    struct Pipe {
+    struct Pipe 
+    {
         Rectangle size;    // Position and size of the pipe
         Vector2 velocity;  // Velocity of the pipe
         bool isDead;       // Flag to track if the pipe is off-screen
@@ -174,7 +169,7 @@ private:
 
     const double pipeSpawnInterval = 2.0;  // Adjust this interval as needed
     double timeSinceLastPipeSpawn = 0.0;    // Track time since the last pipe spawn
-    const int gapBetweenRectangles = 150; // You can adjust the gap size as needed
+    const int gapBetweenRectangles = 350; // Gap between every individual pipe
 
 
 

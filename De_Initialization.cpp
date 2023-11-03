@@ -7,7 +7,6 @@ void Level::De_Initialization()
     DeTexture();
 
     activePipes.clear();
-    collectibles.clear();
 
     CloseAudioDevice();
 

@@ -326,7 +326,7 @@ void Level::ManagePipes() {
 
 void Level::SpawnPipe() {
     if (activePipes.size() < maxActivePipes) {
-        int gapSize = 190;  // Set the desired gap size
+        int gapSize = 180;  // Set the desired gap size
         int gapPosition = GetRandomValue(gapSize, screenHeight - gapSize);
 
         Pipe topPipes = {};
@@ -349,7 +349,7 @@ void Level::SpawnPipe() {
 
 bool Level::ShouldSpawnNewPipe() {
 
-    const double pipeSpawnInterval = 100.0;
+    const double pipeSpawnInterval = 400.0;
     return timeSinceLastPipeSpawn >= pipeSpawnInterval;
 }
 

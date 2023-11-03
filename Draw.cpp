@@ -197,7 +197,21 @@ void Level::DrawPipes()
 
 void Level::DrawButton(Button button, bool isHighlighted)
 {
-    DrawRectangleRec(button.rect, isHighlighted ? LIGHTGRAY : BLACK);
-    DrawText(button.text, (int)button.rect.x + 70, (int)button.rect.y + 10, 20, RED);
+    if (isHighlighted)
+    {
+        PlaySound(hoveringSound);
+    }
+    // Draw the button
+    Color gold = { 255,215,0, 100 };
+    DrawRectangleRec(button.rect, isHighlighted ? LIGHTGRAY : gold);
+
+    // Calculate the text position to center it in the button
+    int textWidth = MeasureText(button.text, 23);
+    int textX = static_cast<int>(button.rect.x + (button.rect.width - textWidth) / 2);
+    int textY = static_cast<int>(button.rect.y + (button.rect.height - 23) / 2);
+
+    // Draw the text inside the button
+    Color blue = { 25, 25, 112, 200 };
+    DrawText(button.text, textX, textY, 23, blue);
 }
 

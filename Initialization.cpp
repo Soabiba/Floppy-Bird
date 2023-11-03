@@ -34,7 +34,8 @@ void Level::Variables() {
 
 }
 
-void Level::SetupMenuButtons() {
+void Level::SetupMenuButtons() 
+{
 
     playButton = { { (float)screenWidth / 2 - 100, (float)screenHeight / 2 - 25, 200, 50 }, "Play", false };
     highscoreButton = { { (float)screenWidth / 2 - 100, (float)screenHeight / 2 + 50, 200, 50 }, "High Score", false };
@@ -44,7 +45,8 @@ void Level::SetupMenuButtons() {
     backToMenuButton = { { (float)screenWidth / 2 - 100, (float)screenHeight / 2 + 125, 200, 50 }, "Menu", false };
 }
 
-void Level::floopyInit() {
+void Level::floopyInit() 
+{
     floopy.isDead = false;
     floopy.rec.x = 100;
     floopy.rec.y = (screenHeight - floopy.rec.height) / 2;
