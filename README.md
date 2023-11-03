@@ -20,7 +20,7 @@
 
 ## Game Overview
 
-Welcome to the Flappy Bird game! This classic, yet addictive game lets you control a bird's flight through a series of obstacles. Challenge your reflexes and see how far you can go!
+Welcome to the Floopy Bird game! This classic, yet addictive game lets you control a bird's flight through a series of obstacles. Challenge your reflexes and see how far you can go!
 
 ## Controls
 
