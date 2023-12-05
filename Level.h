@@ -64,13 +64,21 @@ private:
     void DrawButton(Button button, bool isHighlighted);
 
     // Structure for parallax scrolling background
-    struct Background
+    struct BackgroundSky
     {
-        float scrollSpeed = 2.0f;
+        float scrollSpeedSky = 5.0f;
         float offsetX = 0.0f;
     };
 
-    Background background;
+    BackgroundSky backgroundsky;
+
+    struct BackgroundGround
+    {
+        float scrollSpeedGround = 2.0f;
+        float offsetX = 0.0f;
+    };
+
+    BackgroundGround backgroundground;
 
     // Structure to define pipes
     struct Pipe
@@ -131,7 +139,8 @@ private:
     void DrawGame();
     void DrawHighScoreScreen();
     void DrawGameOverScreen();
-    void DrawBackground();
+    void DrawBackgroundSky();
+    void DrawBackgroundGround();
     void DrawFloopy();
     void DrawScore();
     void DrawNameEntryScreen();
@@ -163,6 +172,8 @@ private:
     Texture2D mainbackgroundImage;
     Texture2D endbackgroundImage;
     Texture2D highscorebg;
+    Texture2D sky_parallax;
+    Texture2D ground_parallax;
 
     Sound hitSound;
     Sound gameOverSound;

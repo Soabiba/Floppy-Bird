@@ -45,7 +45,8 @@ void Level::DrawMenu()
 
 void Level::DrawGame()
 {
-    DrawBackground();
+    DrawBackgroundSky();
+    DrawBackgroundGround();
     DrawFloopy();
     DrawPipes();
     DrawScore();
@@ -53,16 +54,32 @@ void Level::DrawGame()
 
 // Draw the scrolling background
 
-void Level::DrawBackground()
+void Level::DrawBackgroundSky()
 {
-    background.offsetX += background.scrollSpeed;
-    if (background.offsetX >= backgroundImage.width)
+    backgroundsky.offsetX += backgroundsky.scrollSpeedSky;
+    if (backgroundsky.offsetX >= sky_parallax.width)
     {
-        background.offsetX = 0;
+        backgroundsky.offsetX = 0;
     }
 
-    DrawTexture(backgroundImage, -(int)background.offsetX, 0, WHITE);
-    DrawTexture(backgroundImage, -(int)background.offsetX + backgroundImage.width, 0, WHITE);
+    DrawTexture(sky_parallax, -(int)backgroundsky.offsetX, 0, WHITE);
+    DrawTexture(sky_parallax, -(int)backgroundsky.offsetX + backgroundImage.width, 0, WHITE);
+}
+
+void Level::DrawBackgroundGround()
+{
+    backgroundground.offsetX += backgroundground.scrollSpeedGround;
+    if (backgroundground.offsetX >= ground_parallax.width)
+    {
+        backgroundground.offsetX = 0;
+    }
+
+    // Adjust the Y-coordinate to start from the top of the screen
+    int groundY = GetScreenHeight() - ground_parallax.height;
+
+    // Draw ground parallax
+    DrawTexture(ground_parallax, -(int)backgroundground.offsetX, groundY, WHITE);
+    DrawTexture(ground_parallax, -(int)backgroundground.offsetX + ground_parallax.width, groundY, WHITE);
 }
 
 // Draw the Floopy character

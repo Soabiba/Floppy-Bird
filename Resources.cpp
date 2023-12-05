@@ -27,4 +27,6 @@ void Level::UploadTextures()
     mainbackgroundImage = LoadTexture("./Source/Assets/mainmenubg.png");
     endbackgroundImage = LoadTexture("./Source/Assets/endgame.png");
     highscorebg = LoadTexture("./Source/Assets/highscorebg.png");
+    sky_parallax = LoadTexture("./Source/Assets/Background_Asset sky.png");
+    ground_parallax = LoadTexture("./Source/Assets/Background_Asset ground.png");
 }
